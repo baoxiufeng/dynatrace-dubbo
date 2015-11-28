@@ -1,4 +1,4 @@
-package com.alibaba.dubbo.dynatrace.support;
+package com.dynatrace.adk.dubbo;
 
 import com.alibaba.dubbo.common.Constants;
 import com.alibaba.dubbo.common.extension.Activate;
