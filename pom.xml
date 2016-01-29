@@ -12,8 +12,18 @@
 	<artifactId>dubbo-dynatrace</artifactId>
 	<version>1.0.0</version>
 
+  	<developers>
+	    <developer>
+	      <id>wei.ding</id>
+	      <name>Ding Wei</name>
+	      <email>wei.ding@dynatrace.com</email>
+	      <roles>
+	        <role>Delivery Consultant</role>
+	      </roles>
+	    </developer>
+    </developers>
+    
 	<dependencies>
-	
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo-rpc-api</artifactId>
