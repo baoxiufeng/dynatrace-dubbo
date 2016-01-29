@@ -19,7 +19,7 @@ public class DynatraceFilter implements Filter {
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 		
 		String tagString = invocation.getAttachments().get(DYNATRACE_TAG_KEY);
-		if(tagString != null){
+		if(tagString != null){// this is a consumer
 			
 			// initialize the dynaTrace ADK
 			DynaTraceADKFactory.initialize();
@@ -36,7 +36,7 @@ public class DynatraceFilter implements Filter {
 			tagging.endServerPurePath();
 			
 			return result;
-		}else{
+		}else{ //this is a producer
 			
 			// initialize the dynaTrace ADK
 			DynaTraceADKFactory.initialize();
@@ -44,10 +44,12 @@ public class DynatraceFilter implements Filter {
 			// get an instance of the Tagging ADK
 			Tagging tagging = DynaTraceADKFactory.createTagging();
 			tagString = tagging.getTagAsString();
+			
 			// insert a synchronous link node
 			tagging.linkClientPurePath(false, tagString);
+			
 			invocation.getAttachments().put(DYNATRACE_TAG_KEY, tagString);
-			// TODO Auto-generated method stub
+			
 			Result result = invoker.invoke(invocation);
 			
 			DynaTraceADKFactory.uninitialize();
