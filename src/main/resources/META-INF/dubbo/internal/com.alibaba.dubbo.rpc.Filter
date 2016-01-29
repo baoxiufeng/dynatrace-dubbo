@@ -1,1 +1,1 @@
-dynatraceFilter=com.alibaba.dubbo.dynatrace.support.DynatraceFilter
+dynatraceFilter=com.dynatrace.adk.dubbo.DynatraceFilter
