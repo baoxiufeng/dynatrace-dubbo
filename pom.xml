@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>com.dynatrace</groupId>
 			<artifactId>adk</artifactId>
-			<version>6.1</version>
+			<version>6.2</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/com.dynatrace.adk.jar</systemPath>
 		</dependency>
