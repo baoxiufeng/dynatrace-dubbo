@@ -49,7 +49,7 @@ public class DynatraceProviderFilter implements Filter {
 	
 	//this is a empty method for dynaTrace to monitor the argument
 	private void recordTagString(String tagString){
-		System.out.println("invoke in " + this.getClass().getName() + "wit tagString: " + tagString);
+		//System.out.println("invoke in " + this.getClass().getName() + "wit tagString: " + tagString);
 		return;
 	}
 
