@@ -10,13 +10,12 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.dynatrace.adk.DynaTraceADKFactory;
 import com.dynatrace.adk.Tagging;
 
-@Activate(group = {Constants.PROVIDER, Constants.CONSUMER})
-public class DynatraceFilter implements Filter {
-	
+@Activate(group = Constants.PROVIDER, order=Integer.MIN_VALUE)
+public class DynatraceProviderFilter implements Filter {
 	
 	private static final String DYNATRACE_TAG_KEY = "DYNATRACE_TAG_KEY";
 	
-	public DynatraceFilter() {
+	public DynatraceProviderFilter() {
 		DynaTraceADKFactory.class.getName();
 	}
 
@@ -24,6 +23,8 @@ public class DynatraceFilter implements Filter {
 		
 		String tagString = invocation.getAttachments().get(DYNATRACE_TAG_KEY);
 		if(tagString != null){// this is a consumer
+			
+			recordTagString(tagString);
 			
 			// initialize the dynaTrace ADK
 			DynaTraceADKFactory.initialize();
@@ -40,26 +41,16 @@ public class DynatraceFilter implements Filter {
 			tagging.endServerPurePath();
 			
 			return result;
-		}else{ //this is a producer
-			
-			// initialize the dynaTrace ADK
-			DynaTraceADKFactory.initialize();
-			
-			// get an instance of the Tagging ADK
-			Tagging tagging = DynaTraceADKFactory.createTagging();
-			tagString = tagging.getTagAsString();
-			
-			// insert a synchronous link node
-			tagging.linkClientPurePath(false, tagString);
-			
-			invocation.getAttachments().put(DYNATRACE_TAG_KEY, tagString);
-			
-			Result result = invoker.invoke(invocation);
-			
-			DynaTraceADKFactory.uninitialize();
-			
-			return result;
+		}else{
+			return invoker.invoke(invocation);
 		}
+		
+	}
+	
+	//this is a empty method for dynaTrace to monitor the argument
+	private void recordTagString(String tagString){
+		System.out.println("invoke in " + this.getClass().getName() + "wit tagString: " + tagString);
+		return;
 	}
 
 }

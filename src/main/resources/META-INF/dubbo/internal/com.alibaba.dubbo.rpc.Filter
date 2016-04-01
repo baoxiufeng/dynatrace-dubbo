@@ -1,1 +1,2 @@
-dynatraceFilter=com.dynatrace.adk.dubbo.DynatraceFilter
+dynatraceProviderFilter=com.dynatrace.adk.dubbo.DynatraceProviderFilter
+dynatraceConsumerFilter=com.dynatrace.adk.dubbo.DynatraceConsumerFilter
