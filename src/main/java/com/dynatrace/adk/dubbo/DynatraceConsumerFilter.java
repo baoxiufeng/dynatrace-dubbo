@@ -16,10 +16,6 @@ public class DynatraceConsumerFilter implements Filter {
 
 	private static final String DYNATRACE_TAG_KEY = "DYNATRACE_TAG_KEY";
 
-	public DynatraceConsumerFilter() {
-		DynaTraceADKFactory.class.getName();
-	}
-
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 
 		try {

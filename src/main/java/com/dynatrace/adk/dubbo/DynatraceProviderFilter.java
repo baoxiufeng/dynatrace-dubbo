@@ -14,10 +14,6 @@ import com.dynatrace.adk.Tagging;
 public class DynatraceProviderFilter implements Filter {
 	
 	private static final String DYNATRACE_TAG_KEY = "DYNATRACE_TAG_KEY";
-	
-	public DynatraceProviderFilter() {
-		DynaTraceADKFactory.class.getName();
-	}
 
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 		
