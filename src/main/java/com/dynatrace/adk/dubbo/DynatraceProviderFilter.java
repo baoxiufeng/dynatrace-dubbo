@@ -40,6 +40,7 @@ public class DynatraceProviderFilter implements Filter {
 			try {
 				if(tagging != null){
 					tagging.endServerPurePath();
+					DynaTraceADKFactory.uninitialize();
 				}
 			} catch (Throwable t) {
 				// do nothing
