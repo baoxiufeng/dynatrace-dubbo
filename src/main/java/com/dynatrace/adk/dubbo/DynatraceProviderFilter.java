@@ -47,9 +47,8 @@ public class DynatraceProviderFilter implements Filter {
 			}
 			
 			return result;
-		}else{
-			return invoker.invoke(invocation);
 		}
+		return invoker.invoke(invocation);
 		
 	}
 
