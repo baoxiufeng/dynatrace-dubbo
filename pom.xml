@@ -3,8 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>com.dynatrace</groupId>
-	<artifactId>dubbo-dynatrace</artifactId>
-	<version>1.1.0</version>
+	<artifactId>dynatrace-dubbo</artifactId>
+	<version>6.3</version>
 
   	<developers>
 	    <developer>
