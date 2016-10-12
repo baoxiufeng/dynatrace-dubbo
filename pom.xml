@@ -4,7 +4,7 @@
 	
 	<groupId>com.dynatrace</groupId>
 	<artifactId>dynatrace-dubbo</artifactId>
-	<version>6.3</version>
+	<version>6.5</version>
 
   	<developers>
 	    <developer>
@@ -27,9 +27,9 @@
 		<dependency>
 			<groupId>com.dynatrace</groupId>
 			<artifactId>adk</artifactId>
-			<version>6.3</version>
+			<version>6.5</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/com.dynatrace.adk-6.3.jar</systemPath>
+			<systemPath>${project.basedir}/lib/com.dynatrace.adk-6.5.jar</systemPath>
 		</dependency>
 
 	</dependencies>
