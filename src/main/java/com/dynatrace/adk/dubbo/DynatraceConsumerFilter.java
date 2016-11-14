@@ -26,6 +26,8 @@ public class DynatraceConsumerFilter implements Filter {
 			Tagging tagging = DynaTraceADKFactory.createTagging();
 
 			String tagString = tagging.getTagAsString();
+			
+			this.logTagging(tagString);
 
 			boolean isAsync = RpcUtils.isAsync(invoker.getUrl(), invocation);
 
@@ -45,6 +47,10 @@ public class DynatraceConsumerFilter implements Filter {
 		}
 
 		return result;
+	}
+	
+	private void logTagging(String tagString){
+		return;
 	}
 
 }

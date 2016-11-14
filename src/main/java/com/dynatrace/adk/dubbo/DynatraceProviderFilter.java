@@ -28,6 +28,8 @@ public class DynatraceProviderFilter implements Filter {
 				// get an instance of the Tagging ADK
 				tagging = DynaTraceADKFactory.createTagging();
 				
+				this.logTagging(tagString);
+				
 				tagging.setTagFromString(tagString);
 				
 				tagging.startServerPurePath();
@@ -50,6 +52,10 @@ public class DynatraceProviderFilter implements Filter {
 		}
 		return invoker.invoke(invocation);
 		
+	}
+	
+	private void logTagging(String tagString){
+		return;
 	}
 
 }
