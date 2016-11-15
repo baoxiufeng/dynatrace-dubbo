@@ -28,11 +28,12 @@ public class DynatraceProviderFilter implements Filter {
 				// get an instance of the Tagging ADK
 				tagging = DynaTraceADKFactory.createTagging();
 				
-				this.logTagging(tagString);
 				
 				tagging.setTagFromString(tagString);
 				
 				tagging.startServerPurePath();
+				
+				this.logTagging(tagString);
 			} catch (Throwable t) {
 				// do nothing
 			}
