@@ -17,6 +17,11 @@
 	    </developer>
     </developers>
     
+    <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<dynatrace.version>6.5</dynatrace.version>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -27,9 +32,9 @@
 		<dependency>
 			<groupId>com.dynatrace</groupId>
 			<artifactId>adk</artifactId>
-			<version>6.5</version>
+			<version>${dynatrace.version}</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/com.dynatrace.adk-6.5.jar</systemPath>
+			<systemPath>${basedir}/lib/com.dynatrace.adk-${dynatrace.version}.jar</systemPath>
 		</dependency>
 
 	</dependencies>
