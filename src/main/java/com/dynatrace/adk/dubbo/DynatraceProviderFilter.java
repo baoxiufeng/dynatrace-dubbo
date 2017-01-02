@@ -9,6 +9,7 @@ import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.dynatrace.adk.DynaTraceADKFactory;
 import com.dynatrace.adk.Tagging;
+import com.dynatrace.adk.impl.DummyTaggingImpl;
 
 @Activate(group = Constants.PROVIDER, order=Integer.MIN_VALUE)
 public class DynatraceProviderFilter implements Filter {
@@ -28,12 +29,14 @@ public class DynatraceProviderFilter implements Filter {
 				// get an instance of the Tagging ADK
 				tagging = DynaTraceADKFactory.createTagging();
 				
-				
-				tagging.setTagFromString(tagString);
-				
-				tagging.startServerPurePath();
-				
-				this.logTagging(tagString);
+				if(!(tagging instanceof DummyTaggingImpl)){
+					
+					tagging.setTagFromString(tagString);
+					
+					tagging.startServerPurePath();
+					
+					this.logTagging(tagString);
+				}
 			} catch (Throwable t) {
 				// do nothing
 			}
@@ -42,7 +45,9 @@ public class DynatraceProviderFilter implements Filter {
 			
 			try {
 				if(tagging != null){
-					tagging.endServerPurePath();
+					if(!(tagging instanceof DummyTaggingImpl)){
+						tagging.endServerPurePath();
+					}
 					DynaTraceADKFactory.uninitialize();
 				}
 			} catch (Throwable t) {

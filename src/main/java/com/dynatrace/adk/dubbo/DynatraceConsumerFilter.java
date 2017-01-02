@@ -10,6 +10,7 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.dubbo.rpc.support.RpcUtils;
 import com.dynatrace.adk.DynaTraceADKFactory;
 import com.dynatrace.adk.Tagging;
+import com.dynatrace.adk.impl.DummyTaggingImpl;
 
 @Activate(group = Constants.CONSUMER, order = Integer.MAX_VALUE)
 public class DynatraceConsumerFilter implements Filter {
@@ -24,16 +25,19 @@ public class DynatraceConsumerFilter implements Filter {
 
 			// get an instance of the Tagging ADK
 			Tagging tagging = DynaTraceADKFactory.createTagging();
-
-			String tagString = tagging.getTagAsString();
 			
-			this.logTagging(tagString);
-
-			boolean isAsync = RpcUtils.isAsync(invoker.getUrl(), invocation);
-
-			tagging.linkClientPurePath(isAsync, tagString);
-
-			invocation.getAttachments().put(DYNATRACE_TAG_KEY, tagString);
+			if(!(tagging instanceof DummyTaggingImpl)){
+				String tagString = tagging.getTagAsString();
+				
+				this.logTagging(tagString);
+				
+				boolean isAsync = RpcUtils.isAsync(invoker.getUrl(), invocation);
+				
+				tagging.linkClientPurePath(isAsync, tagString);
+				
+				invocation.getAttachments().put(DYNATRACE_TAG_KEY, tagString);
+			}
+			
 		} catch (Throwable t) {
 			// do nothing
 		}

@@ -12,7 +12,7 @@
 	      <name>Ding Wei</name>
 	      <email>wei.ding@dynatrace.com</email>
 	      <roles>
-	        <role>Delivery Consultant</role>
+	        <role>Solution Consultant</role>
 	      </roles>
 	    </developer>
     </developers>
@@ -29,7 +29,7 @@
 			<artifactId>adk</artifactId>
 			<version>6.5</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/com.dynatrace.adk-6.5.jar</systemPath>
+			<systemPath>${basedir}/lib/com.dynatrace.adk-6.5.jar</systemPath>
 		</dependency>
 
 	</dependencies>
