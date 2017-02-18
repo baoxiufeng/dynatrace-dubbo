@@ -31,7 +31,7 @@
 
 		<dependency>
 			<groupId>com.dynatrace</groupId>
-			<artifactId>adk</artifactId>
+			<artifactId>com.dynatrace.adk</artifactId>
 			<version>${dynatrace.version}</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/com.dynatrace.adk-${dynatrace.version}.jar</systemPath>
