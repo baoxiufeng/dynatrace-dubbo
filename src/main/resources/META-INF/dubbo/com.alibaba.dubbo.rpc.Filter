@@ -1,0 +1,2 @@
+dtP=com.dynatrace.adk.dubbo.DynatraceProviderFilter
+dtC=com.dynatrace.adk.dubbo.DynatraceConsumerFilter

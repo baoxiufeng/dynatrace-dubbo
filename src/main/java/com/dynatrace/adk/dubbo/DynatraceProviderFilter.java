@@ -11,7 +11,7 @@ import com.dynatrace.adk.DynaTraceADKFactory;
 import com.dynatrace.adk.Tagging;
 import com.dynatrace.adk.impl.DummyTaggingImpl;
 
-@Activate(group = Constants.PROVIDER, order=Integer.MIN_VALUE)
+@Activate(group = Constants.PROVIDER)
 public class DynatraceProviderFilter implements Filter {
 	
 	private static final String DYNATRACE_TAG_KEY = "DYNATRACE_TAG_KEY";

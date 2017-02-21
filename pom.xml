@@ -2,6 +2,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
+	<parent>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>dubbo-parent</artifactId>
+	    <version>2.5.3</version>
+  	</parent>
+  	
 	<groupId>com.dynatrace</groupId>
 	<artifactId>dynatrace-dubbo</artifactId>
 	<version>6.5</version>
@@ -18,14 +24,14 @@
     </developers>
     
     <properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<dynatrace.version>6.5</dynatrace.version>
+		<dynatrace.version>6.2</dynatrace.version>
 	</properties>
 	
 	<dependencies>
+	
 		<dependency>
 			<groupId>com.alibaba</groupId>
-			<artifactId>dubbo-rpc-api</artifactId>
+			<artifactId>dubbo</artifactId>
 			<version>2.5.3</version>
 		</dependency>
 
@@ -38,5 +44,6 @@
 		</dependency>
 
 	</dependencies>
+
 
 </project>

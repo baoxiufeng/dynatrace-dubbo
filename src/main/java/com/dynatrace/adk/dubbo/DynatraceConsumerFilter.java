@@ -12,7 +12,7 @@ import com.dynatrace.adk.DynaTraceADKFactory;
 import com.dynatrace.adk.Tagging;
 import com.dynatrace.adk.impl.DummyTaggingImpl;
 
-@Activate(group = Constants.CONSUMER, order = Integer.MAX_VALUE)
+@Activate(group = Constants.CONSUMER)
 public class DynatraceConsumerFilter implements Filter {
 
 	private static final String DYNATRACE_TAG_KEY = "DYNATRACE_TAG_KEY";
