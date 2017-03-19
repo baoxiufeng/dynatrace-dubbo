@@ -14,14 +14,17 @@ import com.dynatrace.adk.impl.DummyTaggingImpl;
 @Activate(group = Constants.PROVIDER)
 public class DynatraceProviderFilter implements Filter {
 	
-	private static final String DYNATRACE_TAG_KEY = "DYNATRACE_TAG_KEY";
+	private static final String DYNATRACE_TAG_KEY = "dtdTraceTagInfo";
+	
+	public DynatraceProviderFilter(){
+		System.out.println("dynatrace adk initialized in " + Constants.PROVIDER);
+	}
 
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 		
 		String tagString = invocation.getAttachments().get(DYNATRACE_TAG_KEY);
-		
+		Tagging tagging = null;
 		if(tagString != null){
-			Tagging tagging = null;
 			try {
 				// initialize the dynaTrace ADK
 				DynaTraceADKFactory.initialize();
@@ -40,23 +43,22 @@ public class DynatraceProviderFilter implements Filter {
 			} catch (Throwable t) {
 				// do nothing
 			}
-					
-			Result result = invoker.invoke(invocation);
-			
+		}
+		
+		try {
+			return invoker.invoke(invocation);
+		} finally {
 			try {
-				if(tagging != null){
-					if(!(tagging instanceof DummyTaggingImpl)){
+				if (tagString != null) {
+					if (tagging != null && !(tagging instanceof DummyTaggingImpl)) {
 						tagging.endServerPurePath();
 					}
-					DynaTraceADKFactory.uninitialize();
 				}
 			} catch (Throwable t) {
 				// do nothing
 			}
-			
-			return result;
 		}
-		return invoker.invoke(invocation);
+		
 		
 	}
 	

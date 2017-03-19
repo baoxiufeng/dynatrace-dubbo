@@ -15,7 +15,11 @@ import com.dynatrace.adk.impl.DummyTaggingImpl;
 @Activate(group = Constants.CONSUMER)
 public class DynatraceConsumerFilter implements Filter {
 
-	private static final String DYNATRACE_TAG_KEY = "DYNATRACE_TAG_KEY";
+	private static final String DYNATRACE_TAG_KEY = "dtdTraceTagInfo";
+	
+	public DynatraceConsumerFilter(){
+		System.out.println("dynatrace adk initialized in " + Constants.CONSUMER);
+	}
 
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 
@@ -26,7 +30,7 @@ public class DynatraceConsumerFilter implements Filter {
 			// get an instance of the Tagging ADK
 			Tagging tagging = DynaTraceADKFactory.createTagging();
 			
-			if(!(tagging instanceof DummyTaggingImpl)){
+			if(tagging !=null && !(tagging instanceof DummyTaggingImpl)){
 				String tagString = tagging.getTagAsString();
 				
 				this.logTagging(tagString);
