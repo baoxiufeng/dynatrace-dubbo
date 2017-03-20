@@ -10,7 +10,6 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.dubbo.rpc.support.RpcUtils;
 import com.dynatrace.adk.DynaTraceADKFactory;
 import com.dynatrace.adk.Tagging;
-import com.dynatrace.adk.impl.DummyTaggingImpl;
 
 @Activate(group = Constants.CONSUMER)
 public class DynatraceConsumerFilter implements Filter {
@@ -18,28 +17,25 @@ public class DynatraceConsumerFilter implements Filter {
 	private static final String DYNATRACE_TAG_KEY = "dtdTraceTagInfo";
 	
 	public DynatraceConsumerFilter(){
-		System.out.println("dynatrace adk initialized in " + Constants.CONSUMER);
+//		System.out.println("dynatrace adk initialized in " + Constants.CONSUMER);
 	}
 
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-
 		try {
-			// initialize the dynaTrace ADK
 			DynaTraceADKFactory.initialize();
-
-			// get an instance of the Tagging ADK
 			Tagging tagging = DynaTraceADKFactory.createTagging();
-			
-			if(tagging !=null && !(tagging instanceof DummyTaggingImpl)){
+			if(tagging != null ){
+				//create a custom tag based on the unique message id
+//				byte[] customTagBytes = invocation.getArguments()[0].toString().getBytes();
+//				Tagging.CustomTag customTag = tagging.createCustomTag(customTagBytes);
+				
+				//get already existing tag from current thread
 				String tagString = tagging.getTagAsString();
-				
-				this.logTagging(tagString);
-				
 				boolean isAsync = RpcUtils.isAsync(invoker.getUrl(), invocation);
-				
 				tagging.linkClientPurePath(isAsync, tagString);
-				
+//				tagging.linkClientPurePath(isAsync, customTag);
 				invocation.getAttachments().put(DYNATRACE_TAG_KEY, tagString);
+				
 			}
 			
 		} catch (Throwable t) {
@@ -56,9 +52,4 @@ public class DynatraceConsumerFilter implements Filter {
 
 		return result;
 	}
-	
-	private void logTagging(String tagString){
-		return;
-	}
-
 }

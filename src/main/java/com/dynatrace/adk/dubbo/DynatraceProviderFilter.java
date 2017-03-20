@@ -9,7 +9,6 @@ import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.dynatrace.adk.DynaTraceADKFactory;
 import com.dynatrace.adk.Tagging;
-import com.dynatrace.adk.impl.DummyTaggingImpl;
 
 @Activate(group = Constants.PROVIDER)
 public class DynatraceProviderFilter implements Filter {
@@ -17,40 +16,31 @@ public class DynatraceProviderFilter implements Filter {
 	private static final String DYNATRACE_TAG_KEY = "dtdTraceTagInfo";
 	
 	public DynatraceProviderFilter(){
-		System.out.println("dynatrace adk initialized in " + Constants.PROVIDER);
+//		System.out.println("dynatrace adk initialized in " + Constants.PROVIDER);
 	}
 
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-		
 		String tagString = invocation.getAttachments().get(DYNATRACE_TAG_KEY);
 		Tagging tagging = null;
 		if(tagString != null){
 			try {
-				// initialize the dynaTrace ADK
 				DynaTraceADKFactory.initialize();
-				
-				// get an instance of the Tagging ADK
 				tagging = DynaTraceADKFactory.createTagging();
+//				byte[] customTagBytes = invocation.getArguments()[0].toString().getBytes();
+//				tagging.setCustomTag(customTagBytes);
 				
-				if(!(tagging instanceof DummyTaggingImpl)){
-					
-					tagging.setTagFromString(tagString);
-					
-					tagging.startServerPurePath();
-					
-					this.logTagging(tagString);
-				}
+				tagging.setTagFromString(tagString);
+				tagging.startServerPurePath();
 			} catch (Throwable t) {
 				// do nothing
 			}
 		}
-		
 		try {
 			return invoker.invoke(invocation);
 		} finally {
 			try {
 				if (tagString != null) {
-					if (tagging != null && !(tagging instanceof DummyTaggingImpl)) {
+					if (tagging != null ) {
 						tagging.endServerPurePath();
 					}
 				}
@@ -60,10 +50,6 @@ public class DynatraceProviderFilter implements Filter {
 		}
 		
 		
-	}
-	
-	private void logTagging(String tagString){
-		return;
 	}
 
 }
