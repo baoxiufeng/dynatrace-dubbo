@@ -16,40 +16,25 @@ public class DynatraceConsumerFilter implements Filter {
 
 	private static final String DYNATRACE_TAG_KEY = "dtdTraceTagInfo";
 	
-	public DynatraceConsumerFilter(){
-//		System.out.println("dynatrace adk initialized in " + Constants.CONSUMER);
+	static {
+		DynaTraceADKFactory.initialize();
 	}
+	
+	public DynatraceConsumerFilter(){}
 
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 		try {
-			DynaTraceADKFactory.initialize();
 			Tagging tagging = DynaTraceADKFactory.createTagging();
 			if(tagging != null ){
-				//create a custom tag based on the unique message id
-//				byte[] customTagBytes = invocation.getArguments()[0].toString().getBytes();
-//				Tagging.CustomTag customTag = tagging.createCustomTag(customTagBytes);
-				
-				//get already existing tag from current thread
 				String tagString = tagging.getTagAsString();
 				boolean isAsync = RpcUtils.isAsync(invoker.getUrl(), invocation);
 				tagging.linkClientPurePath(isAsync, tagString);
-//				tagging.linkClientPurePath(isAsync, customTag);
 				invocation.getAttachments().put(DYNATRACE_TAG_KEY, tagString);
-				
 			}
 			
-		} catch (Throwable t) {
-			// do nothing
-		}
-
-		Result result = invoker.invoke(invocation);
-
-		try {
-			DynaTraceADKFactory.uninitialize();
-		} catch (Throwable t) {
-			// do nothing
-		}
-
-		return result;
+		} catch (Throwable t) {}
+		return invoker.invoke(invocation);
 	}
+	
+	
 }

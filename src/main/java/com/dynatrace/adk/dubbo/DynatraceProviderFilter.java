@@ -15,25 +15,21 @@ public class DynatraceProviderFilter implements Filter {
 	
 	private static final String DYNATRACE_TAG_KEY = "dtdTraceTagInfo";
 	
-	public DynatraceProviderFilter(){
-//		System.out.println("dynatrace adk initialized in " + Constants.PROVIDER);
+	static {
+		DynaTraceADKFactory.initialize();
 	}
+	
+	public DynatraceProviderFilter(){}
 
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 		String tagString = invocation.getAttachments().get(DYNATRACE_TAG_KEY);
 		Tagging tagging = null;
 		if(tagString != null){
 			try {
-				DynaTraceADKFactory.initialize();
 				tagging = DynaTraceADKFactory.createTagging();
-//				byte[] customTagBytes = invocation.getArguments()[0].toString().getBytes();
-//				tagging.setCustomTag(customTagBytes);
-				
 				tagging.setTagFromString(tagString);
 				tagging.startServerPurePath();
-			} catch (Throwable t) {
-				// do nothing
-			}
+			} catch (Throwable t) {}
 		}
 		try {
 			return invoker.invoke(invocation);
@@ -44,9 +40,7 @@ public class DynatraceProviderFilter implements Filter {
 						tagging.endServerPurePath();
 					}
 				}
-			} catch (Throwable t) {
-				// do nothing
-			}
+			} catch (Throwable t) {}
 		}
 		
 		

@@ -24,7 +24,7 @@
     </developers>
     
     <properties>
-		<dynatrace.version>6.2</dynatrace.version>
+		<dynatrace.version>6.5</dynatrace.version>
 	</properties>
 	
 	<dependencies>
