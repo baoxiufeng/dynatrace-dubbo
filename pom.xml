@@ -10,7 +10,7 @@
   	
 	<groupId>com.dynatrace</groupId>
 	<artifactId>dynatrace-dubbo</artifactId>
-	<version>6.5</version>
+	<version>7.0</version>
 
   	<developers>
 	    <developer>
@@ -24,7 +24,7 @@
     </developers>
     
     <properties>
-		<dynatrace.version>6.5</dynatrace.version>
+		<dynatrace.version>7.0</dynatrace.version>
 	</properties>
 	
 	<dependencies>
