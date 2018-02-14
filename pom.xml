@@ -1,16 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
-	<parent>
-	    <groupId>com.alibaba</groupId>
-	    <artifactId>dubbo-parent</artifactId>
-	    <version>2.5.3</version>
-  	</parent>
   	
 	<groupId>com.dynatrace</groupId>
 	<artifactId>dynatrace-dubbo</artifactId>
-	<version>7.0</version>
+	<version>7.0.0.2470</version>
 
   	<developers>
 	    <developer>
@@ -24,26 +18,52 @@
     </developers>
     
     <properties>
-		<dynatrace.version>7.0</dynatrace.version>
+		<dynatrace.version>7.0.0.2470</dynatrace.version>
+		<dubbo.version>2.5.3</dubbo.version>
 	</properties>
 	
 	<dependencies>
+
+		<dependency>
+		    <groupId>com.dynatrace</groupId>
+		    <artifactId>com.dynatrace.adk</artifactId>
+		    <version>${dynatrace.version}</version>
+		</dependency>
 	
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
-			<version>2.5.3</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.dynatrace</groupId>
-			<artifactId>com.dynatrace.adk</artifactId>
-			<version>${dynatrace.version}</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/com.dynatrace.adk-${dynatrace.version}.jar</systemPath>
+			<version>${dubbo.version}</version>
 		</dependency>
 
 	</dependencies>
 
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>com/dynatrace/adk/**</include>
+									<include>META-INF/dubbo/com.alibaba.dubbo.rpc.Filter</include>
+									<include>com.dynatrace:com.dynatrace.adk:jar:</include>
+								</includes>
+							</artifactSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
 </project>
