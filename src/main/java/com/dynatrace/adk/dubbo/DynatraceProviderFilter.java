@@ -10,7 +10,7 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.dynatrace.adk.DynaTraceADKFactory;
 import com.dynatrace.adk.Tagging;
 
-@Activate(group = Constants.PROVIDER)
+@Activate(group = Constants.PROVIDER, order=Integer.MIN_VALUE)
 public class DynatraceProviderFilter implements Filter {
 	
 	private static final String DYNATRACE_TAG_KEY = "dtdTraceTagInfo";

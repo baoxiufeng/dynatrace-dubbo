@@ -11,7 +11,7 @@ import com.alibaba.dubbo.rpc.support.RpcUtils;
 import com.dynatrace.adk.DynaTraceADKFactory;
 import com.dynatrace.adk.Tagging;
 
-@Activate(group = Constants.CONSUMER)
+@Activate(group = Constants.CONSUMER, order=Integer.MAX_VALUE)
 public class DynatraceConsumerFilter implements Filter {
 
 	private static final String DYNATRACE_TAG_KEY = "dtdTraceTagInfo";
